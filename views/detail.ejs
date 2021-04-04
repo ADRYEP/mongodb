@@ -1,0 +1,99 @@
+<%- include("templates/header") %>
+
+<%- include("templates/navbar") %> 
+
+<div class="container mt-3">
+
+<form id="formEdit" data-id="<%= game.id %>">
+    <input
+        type="text"
+        class="form-control my-2"
+        name="name"
+        value="<%= game.name %>"
+        id="nameInput"
+    >
+    <select
+        class="custom-select"
+        id="devInput"
+        name="developer"
+        value="<%= game.developer %>">  
+        <% arrayDevs.forEach(element => { %>
+            <option value='<%= element.id %>'><%= element.name %> </option>
+        <% }) %>
+    
+    </select>
+    
+    <button
+        class="btn btn-warning btn-block"
+        type="submit"
+        >
+        Edit
+    </button>
+
+        
+</form>
+
+<hr>
+
+<button
+    class="btn btn-danger btn-sm mt-3"
+    id="btnDelete"
+    data-id="<%= game.id %>">
+    Delete
+</button>
+
+</div>
+
+<%- include("templates/footer") %>
+
+
+<script>
+    const btnDelete = document.querySelector('#btnDelete')
+
+    btnDelete.addEventListener('click', async() => {
+        console.log('Me has dado click');
+        const id = btnDelete.dataset.id
+
+        try {
+            const data = await fetch(`/games/${id}`, {
+                method: 'delete'
+            })
+            const res = await data.json()
+            
+            if (res.state) {                
+                window.location.href = "/games"
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+    })
+
+    const formEdit = document.querySelector('#formEdit')
+
+    formEdit.addEventListener('submit', async(e) => {
+        e.preventDefault()
+
+        const name = document.querySelector('#nameInput').value
+        const developer = document.querySelector('#devInput').value
+        const id = formEdit.dataset.id
+
+        try {
+            const data = await fetch(`/games/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name,
+                    developer
+                })
+            })
+            const res = await data.json()
+            console.log(name,developer);
+        } catch (error) {
+            console.log(error);
+        }
+    })
+
+</script>

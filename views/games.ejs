@@ -1,0 +1,43 @@
+    <%- include("templates/header") %> 
+
+<body>
+
+    <%- include("templates/navbar") %>
+
+    <div class="container mt-5">
+
+        <table class="table table-dark table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Dev ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Buttons</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (arrayGames.length> 0) { %>
+                    <% arrayGames.forEach(game=> { %>
+                        <tr>
+                            <td>
+                                <%= game.developer %>
+                            </td>
+                            <td>
+                                <%= game.name %>
+                            </td>
+                            <td>
+                                <a
+                                    href="./games/<%= game.id %>"
+                                    class="btn btn-warning btn-sm"
+                                    >Edit</a>
+                            </td>
+                        </tr>
+                    <% }) %>
+                <% } %>
+            </tbody>
+        </table>
+
+        <a href="./games/create" class="btn btn-outline-dark">Agregar Juego</a>
+
+    </div>
+
+    <%- include("templates/footer") %> 

@@ -1,0 +1,35 @@
+<%- include("templates/header") %>
+
+<%- include("templates/navbar") %> 
+
+<div class="container mt-3">
+    <form action="/games" method="post">
+        <input
+            type="text"
+            placeholder="Nombre"
+            class="form-control my-2"
+            name="name">
+
+        <div class="input-group mb-3">
+            <select
+                class="custom-select"
+                id="inputGroupSelect01"
+                name="developer">
+            <option selected>Desarrolladora</option>
+            
+            <% arrayDevs.forEach(element => { %>
+                <option value='<%= element.id %>'><%= element.name %> </option>
+            <% }) %>
+            
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-outline-dark btn-block">
+            Agregar
+        </button>
+
+    </form>
+
+</div>
+
+<%- include("templates/footer") %> 
